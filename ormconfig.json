@@ -1,0 +1,13 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "pavles6",
+  "password": "root",
+  "database": "dash_backend",
+  "synchronize": true,
+  "logging": true,
+  "entities": [
+    "src/entity/*.*"
+  ]
+}
