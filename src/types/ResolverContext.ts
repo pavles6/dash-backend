@@ -4,4 +4,5 @@ export interface ResolverContext {
   req: Request
   res: Response
   userId: string | null
+  fcmToken: string | null
 }

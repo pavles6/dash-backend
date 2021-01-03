@@ -15,7 +15,11 @@ export class ConfirmUserResolver {
 
     if (!userId) return false
 
-    await User.update({ id: userId }, { confirmed: true })
+    const user = (await User.findOne({ where: { id: userId } })) as User
+
+    user.confirmed = true
+
+    await user.save()
 
     await redis.del(RedisPrefix.AccountConfirmation + code)
 

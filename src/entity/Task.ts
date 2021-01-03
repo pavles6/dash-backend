@@ -7,7 +7,7 @@ import {
   AfterInsert,
 } from 'typeorm'
 import { ObjectType, Field, ID } from 'type-graphql'
-import { TaskPriority, TaskType } from '../types/Task'
+import { TaskPriority, TaskType } from './task/TaskTypes'
 import { User } from './User'
 
 @ObjectType()
@@ -26,11 +26,11 @@ export class Task extends BaseEntity {
   title: string
 
   @Field()
-  @Column('enum', { enum: TaskType, enumName: 'task_type' })
+  @Column('enum', { enum: TaskType })
   taskType: TaskType
 
   @Field()
-  @Column('enum', { enum: TaskPriority, enumName: 'task_type' })
+  @Column('enum', { enum: TaskPriority })
   taskPriority: TaskPriority
 
   @Field()

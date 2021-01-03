@@ -1,4 +1,4 @@
-export const generateCode = () => {
+export const generateVerificationCode = () => {
   const range = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.split('')
   const length = 6
 

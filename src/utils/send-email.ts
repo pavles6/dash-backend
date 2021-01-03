@@ -1,49 +1,33 @@
-import nodemailer from 'nodemailer'
-import { EmailType } from '../types/EmailType'
+import nodemailer, { SendMailOptions } from 'nodemailer'
 
 export const sendEmail = async (
-  email: string,
-  code: string,
-  type: EmailType
+  subject: string,
+  to: string,
+  text: string
 ): Promise<any> => {
-  let testAccount = await nodemailer.createTestAccount()
+  const { SMTP_USERNAME, SMTP_PASSWORD } = process.env
 
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: false,
+  const mail = nodemailer.createTransport({
+    service: 'gmail',
     auth: {
-      user: testAccount.user,
-      pass: testAccount.pass,
+      user: SMTP_USERNAME,
+      pass: SMTP_PASSWORD,
     },
   } as any)
 
-  let preset = {}
-
-  if (type == EmailType.PasswordChangeRequest)
-    preset = {
-      from: '"Password change request | Dash" <noreply@dash.io>', // sender address
-      to: email, // list of receivers
-      subject: 'Confirm your email', // Subject line
-      text: `Change password by submitting this code:${code}`, // plain text body
-      html: `<p>Change password by using this code: <b>${code}</b></p>`, // html body
-    }
-
-  if (type == EmailType.AccountConfirmation)
-    preset = {
-      from: '"Email Confirmation | Dash" <noreply@dash.io>', // sender address
-      to: email, // list of receivers
-      subject: 'Activate your account', // Subject line
-      text: `To activate your account use this code: ${code}`, // plain text body
-      html: `<p>Activate your account by using this code: <b>${code}</b>.</p>`, // html body
-    }
+  const data: SendMailOptions = {
+    from: 'info.dash.app@gmail.com',
+    to,
+    text,
+    subject,
+  }
 
   try {
-    const info = await transporter.sendMail(preset)
+    const info = await mail.sendMail(data)
 
-    console.log('Message sent: %s', info.messageId)
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+    console.log('Message sent: %s', info.response)
   } catch (error) {
+    console.log(error)
     throw error
   }
 }

@@ -19,6 +19,7 @@ export class CreateTaskResolver {
       taskPriority,
       taskType,
       title,
+      user,
     }).save()
   }
 }

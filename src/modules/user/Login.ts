@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
+import { sign } from 'jsonwebtoken'
 import { Arg, Ctx, Mutation, Resolver } from 'type-graphql'
 import { User } from '../../entity/User'
 import { ResolverContext } from '../../types/ResolverContext'
-import { createTokens } from '../../utils/create-tokens'
 
 @Resolver()
 export class LoginResolver {
@@ -27,10 +27,12 @@ export class LoginResolver {
 
     if (!user.confirmed) throw new Error('You have not confirmed your account.')
 
-    const { accessToken, refreshToken } = createTokens(user)
+    const token = sign(
+      { userId: user.id },
+      process.env.ACCESS_TOKEN_SECRET as string
+    )
 
-    res.cookie('access_token', accessToken)
-    res.cookie('refresh_token', refreshToken)
+    res.set('Authorization', token)
 
     return user
   }

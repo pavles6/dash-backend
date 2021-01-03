@@ -8,7 +8,6 @@ import { buildSchema } from 'type-graphql'
 import { CreateUserResolver } from '../modules/user/CreateUser'
 import { CreateTaskResolver } from '../modules/task/CreateTask'
 import { GetTasksResolver } from '../modules/task/GetTasks'
-import { InvalidateTokensResolver } from '../modules/user/InvalidateTokens'
 
 export const createSchema = buildSchema({
   resolvers: [
@@ -18,7 +17,6 @@ export const createSchema = buildSchema({
     ConfirmUserResolver,
     ForgotPasswordResolver,
     LoginResolver,
-    InvalidateTokensResolver,
     MeResolver,
     RegisterResolver,
     CreateUserResolver,

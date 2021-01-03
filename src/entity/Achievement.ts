@@ -1,16 +1,22 @@
 import { Field, ID, ObjectType } from 'type-graphql'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 import { User } from './User'
 
-ObjectType()
+@ObjectType()
 @Entity('achievements')
-export class Achievement {
+export class Achievement extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.tasks)
+  @ManyToOne(() => User, (user) => user.achievements, { onDelete: 'CASCADE' })
   user: User
 
   @Field()

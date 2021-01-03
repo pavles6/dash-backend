@@ -9,6 +9,9 @@ export class MeResolver {
   @UseMiddleware(isAuth)
   @Query(() => User, { nullable: true })
   async me(@Ctx() { userId }: ResolverContext): Promise<User | undefined> {
-    return await User.findOne({ where: { id: userId } })
+    return await User.findOne({
+      where: { id: userId },
+      relations: ['tasks', 'achievements'],
+    })
   }
 }

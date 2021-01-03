@@ -5,7 +5,6 @@ import dotenv from 'dotenv'
 
 import { createTypeormConn } from './utils/create-typeorm-conn'
 import { createSchema } from './utils/create-graphql-schema'
-import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
@@ -26,8 +25,7 @@ const main = async () => {
   })
 
   const app = express()
-
-  app.use(cookieParser())
+  app.set('trust proxy', true)
 
   apolloServer.applyMiddleware({ app })
 

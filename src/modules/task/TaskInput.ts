@@ -1,6 +1,6 @@
 import { IsDate, IsEnum, IsUUID, Length } from 'class-validator'
 import { Field, InputType } from 'type-graphql'
-import { TaskPriority, TaskType } from '../../types/Task'
+import { TaskPriority, TaskType } from '../../entity/task/TaskTypes'
 
 @InputType()
 export class TaskInput {
